@@ -12,6 +12,7 @@ pub fn run() {
     let saved_items = storage::load_shelf_items();
 
     tauri::Builder::default()
+        .plugin(tauri_plugin_drag::init())
         .manage(ShelfState(Mutex::new(saved_items)))
         .invoke_handler(tauri::generate_handler![
             commands::shelf_ops::add_file_to_shelf,

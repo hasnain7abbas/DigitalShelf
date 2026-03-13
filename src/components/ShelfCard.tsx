@@ -1,5 +1,6 @@
 import type { ShelfItem } from "../types/shelf";
 import { invoke } from "@tauri-apps/api/core";
+import { startDrag } from "@crabnebula/tauri-plugin-drag";
 import { getFileIcon } from "../utils/fileIcons";
 import "../styles/card.css";
 
@@ -17,15 +18,26 @@ function formatSize(bytes: number): string {
 export function ShelfCard({ item, onRemove }: Props) {
   const { data } = item;
 
-  const handleDragStart = (e: React.DragEvent) => {
+  const handleMouseDown = async (e: React.MouseEvent) => {
+    if ((e.target as HTMLElement).closest(".shelf-card__actions")) return;
     if (data.kind === "File" || data.kind === "Image") {
-      e.dataTransfer.setData("text/plain", data.path);
-      invoke("start_drag", { filePath: data.path });
-    } else if (data.kind === "Text") {
+      e.preventDefault();
+      try {
+        await startDrag({ item: [data.path], icon: data.path });
+      } catch (err) {
+        console.error("Drag failed:", err);
+      }
+    }
+  };
+
+  const handleDragStart = (e: React.DragEvent) => {
+    if (data.kind === "Text") {
       e.dataTransfer.setData("text/plain", data.content);
     } else if (data.kind === "Link") {
       e.dataTransfer.setData("text/uri-list", data.url);
       e.dataTransfer.setData("text/plain", data.url);
+    } else {
+      e.preventDefault();
     }
   };
 
@@ -49,7 +61,7 @@ export function ShelfCard({ item, onRemove }: Props) {
   const hasPath = data.kind === "File" || data.kind === "Image";
 
   return (
-    <div className="shelf-card" draggable onDragStart={handleDragStart}>
+    <div className="shelf-card" draggable onDragStart={handleDragStart} onMouseDown={handleMouseDown}>
       <div className="shelf-card__actions">
         {hasPath && (
           <button

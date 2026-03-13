@@ -25,3 +25,4 @@ base64 = "0.22"
 uuid = { version = "1", features = ["v4"] }
 dirs = "5"
 mime_guess = "2"
+tauri-plugin-drag = "2.1.0"

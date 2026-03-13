@@ -13,6 +13,7 @@
     "core:window:allow-set-focus",
     "core:window:allow-minimize",
     "core:window:allow-is-visible",
-    "core:event:default"
+    "core:event:default",
+    "drag:default"
   ]
 }
