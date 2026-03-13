@@ -52,6 +52,7 @@ pub fn run() {
                             let path_str = path.to_string_lossy().to_string();
                             let _ = window.emit("file-dropped", &path_str);
                         }
+                        let _ = window.emit("drag-hover", false);
                     }
                     tauri::DragDropEvent::Over { position: _ } => {
                         let _ = window.emit("drag-hover", true);
