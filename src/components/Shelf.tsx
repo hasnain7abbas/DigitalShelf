@@ -15,7 +15,7 @@ export function Shelf() {
   return (
     <div
       className={`shelf shelf--${settings.theme}`}
-      style={{ opacity: settings.opacity }}
+      style={{ '--shelf-opacity': settings.opacity } as React.CSSProperties}
     >
       <TitleBar
         alwaysOnTop={settings.always_on_top}

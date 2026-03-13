@@ -1,3 +1,4 @@
+import { getCurrentWindow } from "@tauri-apps/api/window";
 import "../styles/titlebar.css";
 
 interface Props {
@@ -8,6 +9,9 @@ interface Props {
 }
 
 export function TitleBar({ alwaysOnTop, onTogglePin, onClear, itemCount }: Props) {
+  const handleMinimize = () => getCurrentWindow().minimize();
+  const handleClose = () => getCurrentWindow().close();
+
   return (
     <div className="titlebar">
       <div className="titlebar__left">
@@ -22,7 +26,7 @@ export function TitleBar({ alwaysOnTop, onTogglePin, onClear, itemCount }: Props
           onClick={onTogglePin}
           title={alwaysOnTop ? "Unpin from top" : "Pin to top"}
         >
-          {alwaysOnTop ? "\u{1F4CC}" : "\u{1F4CC}"}
+          {"\u{1F4CC}"}
         </button>
         {itemCount > 0 && (
           <button
@@ -33,6 +37,20 @@ export function TitleBar({ alwaysOnTop, onTogglePin, onClear, itemCount }: Props
             {"\u{1F5D1}"}
           </button>
         )}
+        <button
+          className="titlebar__btn titlebar__btn--minimize"
+          onClick={handleMinimize}
+          title="Minimize"
+        >
+          &#x2013;
+        </button>
+        <button
+          className="titlebar__btn titlebar__btn--close"
+          onClick={handleClose}
+          title="Close"
+        >
+          &#x2715;
+        </button>
       </div>
     </div>
   );

@@ -14,7 +14,7 @@
 .shelf-card:hover {
   background: var(--card-bg-hover);
   transform: translateY(-1px);
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.25);
 }
 
 .shelf-card:active {
@@ -22,10 +22,41 @@
   transform: scale(0.98);
 }
 
-.shelf-card__remove {
+.shelf-card__actions {
   position: absolute;
   top: 4px;
-  right: 6px;
+  right: 4px;
+  display: flex;
+  gap: 2px;
+  opacity: 0;
+  transition: opacity var(--transition-fast);
+}
+
+.shelf-card:hover .shelf-card__actions {
+  opacity: 1;
+}
+
+.shelf-card__action-btn {
+  background: none;
+  border: none;
+  color: var(--text-secondary);
+  font-size: 12px;
+  cursor: pointer;
+  width: 22px;
+  height: 22px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background var(--transition-fast), color var(--transition-fast);
+}
+
+.shelf-card__action-btn:hover {
+  background: rgba(255, 255, 255, 0.12);
+  color: var(--accent);
+}
+
+.shelf-card__remove {
   background: none;
   border: none;
   color: var(--text-secondary);
@@ -37,12 +68,7 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  opacity: 0;
-  transition: opacity var(--transition-fast), background var(--transition-fast);
-}
-
-.shelf-card:hover .shelf-card__remove {
-  opacity: 1;
+  transition: background var(--transition-fast), color var(--transition-fast);
 }
 
 .shelf-card__remove:hover {
@@ -74,7 +100,7 @@
 .shelf-card__ext {
   display: inline-block;
   padding: 4px 8px;
-  background: rgba(99, 102, 241, 0.15);
+  background: rgba(129, 140, 248, 0.15);
   color: var(--accent);
   font-size: 11px;
   font-weight: 600;

@@ -22,6 +22,8 @@ pub fn run() {
             commands::shelf_ops::get_shelf_items,
             commands::shelf_ops::reorder_shelf,
             commands::drag_out::start_drag,
+            commands::drag_out::open_file,
+            commands::drag_out::show_in_folder,
             commands::settings::load_settings,
             commands::settings::save_settings,
         ])

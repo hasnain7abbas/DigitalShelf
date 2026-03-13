@@ -19,6 +19,7 @@ export function ShelfCard({ item, onRemove }: Props) {
 
   const handleDragStart = (e: React.DragEvent) => {
     if (data.kind === "File" || data.kind === "Image") {
+      e.dataTransfer.setData("text/plain", data.path);
       invoke("start_drag", { filePath: data.path });
     } else if (data.kind === "Text") {
       e.dataTransfer.setData("text/plain", data.content);
@@ -28,17 +29,53 @@ export function ShelfCard({ item, onRemove }: Props) {
     }
   };
 
+  const handleOpenFile = (e: React.MouseEvent) => {
+    e.stopPropagation();
+    if (data.kind === "File" || data.kind === "Image") {
+      invoke("open_file", { filePath: data.path });
+    } else if (data.kind === "Link") {
+      invoke("open_file", { filePath: data.url });
+    }
+  };
+
+  const handleShowInFolder = (e: React.MouseEvent) => {
+    e.stopPropagation();
+    if (data.kind === "File" || data.kind === "Image") {
+      invoke("show_in_folder", { filePath: data.path });
+    }
+  };
+
   const icon = data.kind === "File" ? getFileIcon(data.extension) : null;
+  const hasPath = data.kind === "File" || data.kind === "Image";
 
   return (
     <div className="shelf-card" draggable onDragStart={handleDragStart}>
-      <button
-        className="shelf-card__remove"
-        onClick={() => onRemove(item.id)}
-        aria-label="Remove item"
-      >
-        &times;
-      </button>
+      <div className="shelf-card__actions">
+        {hasPath && (
+          <button
+            className="shelf-card__action-btn"
+            onClick={handleShowInFolder}
+            title="Show in folder"
+          >
+            &#x1F4C2;
+          </button>
+        )}
+        <button
+          className="shelf-card__action-btn"
+          onClick={handleOpenFile}
+          title="Open"
+          style={{ display: data.kind === "Text" ? "none" : undefined }}
+        >
+          &#x2197;
+        </button>
+        <button
+          className="shelf-card__remove"
+          onClick={() => onRemove(item.id)}
+          aria-label="Remove item"
+        >
+          &times;
+        </button>
+      </div>
 
       <div className="shelf-card__preview">
         {data.kind === "Image" && (

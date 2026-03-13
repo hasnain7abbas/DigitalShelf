@@ -1,21 +1,22 @@
 :root {
-  --shelf-bg: rgba(255, 255, 255, 0.08);
-  --shelf-bg-solid: rgba(30, 30, 40, 0.95);
-  --shelf-border: rgba(255, 255, 255, 0.12);
-  --shelf-blur: 20px;
-  --card-bg: rgba(255, 255, 255, 0.06);
-  --card-bg-hover: rgba(255, 255, 255, 0.12);
-  --card-border: rgba(255, 255, 255, 0.08);
-  --text-primary: rgba(255, 255, 255, 0.92);
-  --text-secondary: rgba(255, 255, 255, 0.55);
-  --accent: #6366f1;
-  --accent-glow: rgba(99, 102, 241, 0.3);
-  --danger: #ef4444;
+  --shelf-bg: rgba(15, 15, 35, 0.88);
+  --shelf-bg-solid: rgba(20, 20, 35, 0.95);
+  --shelf-border: rgba(255, 255, 255, 0.15);
+  --shelf-blur: 24px;
+  --card-bg: rgba(255, 255, 255, 0.1);
+  --card-bg-hover: rgba(255, 255, 255, 0.16);
+  --card-border: rgba(255, 255, 255, 0.1);
+  --text-primary: #f0f0f5;
+  --text-secondary: rgba(220, 220, 240, 0.7);
+  --accent: #818cf8;
+  --accent-glow: rgba(129, 140, 248, 0.35);
+  --danger: #f87171;
   --radius-sm: 8px;
   --radius-md: 12px;
   --radius-lg: 16px;
   --transition-fast: 150ms ease;
   --transition-smooth: 300ms cubic-bezier(0.4, 0, 0.2, 1);
+  --shelf-opacity: 0.85;
 }
 
 * {
