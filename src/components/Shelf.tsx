@@ -1,4 +1,4 @@
-import { useCallback, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { useShelfItems } from "../hooks/useShelfItems";
 import { useDragDrop } from "../hooks/useDragDrop";
 import { useSettings } from "../hooks/useSettings";
@@ -42,6 +42,35 @@ export function Shelf() {
     }
   }, [addText, addLink]);
 
+  const processClipboardText = useCallback(async (text: string) => {
+    const trimmed = text.trim();
+    if (!trimmed) return;
+
+    try {
+      const url = new URL(trimmed);
+      if (url.protocol === "http:" || url.protocol === "https:") {
+        await addLink(trimmed, undefined);
+        return;
+      }
+    } catch {
+      // not a URL
+    }
+    await addText(trimmed);
+  }, [addText, addLink]);
+
+  // Clipboard paste handler (Ctrl+V) for text and links
+  useEffect(() => {
+    const handlePaste = (e: ClipboardEvent) => {
+      const text = e.clipboardData?.getData("text/plain");
+      if (text) {
+        processClipboardText(text);
+      }
+    };
+
+    window.addEventListener("paste", handlePaste);
+    return () => window.removeEventListener("paste", handlePaste);
+  }, [processClipboardText]);
+
   return (
     <div
       className={`shelf shelf--${settings.theme}`}
@@ -65,7 +94,7 @@ export function Shelf() {
       <div className="shelf__items">
         {items.length === 0 ? (
           <div className="shelf__empty">
-            <p>Drop files, images, or text here</p>
+            <p>Drop files, images, or text here<br/><small>Ctrl+V to paste text or links</small></p>
           </div>
         ) : (
           items.map((item) => (
